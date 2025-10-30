@@ -1,0 +1,2 @@
+# © Copyright Li Qi'An Studio 2025, All rights reserved.
+# All Images are copyrighted by Li Qi'An Studio, do not copy, include but not limited by downloading, copying, screenshotting without permission etc.

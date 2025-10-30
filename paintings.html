@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>李奇安工作室</title>
+<meta name="description" content="李奇安工作室" />
+<style>
+    :root {
+        --bg: #0f0f10;
+        --card: rgba(255,255,255,0.07);
+        --accent: #f0a500;
+        --muted: #ccc;
+        --radius: 14px;
+        --blur: 14px;
+        --gap: 1.5rem;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Segoe UI", "Noto Sans SC", system-ui; }
+    body {
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--muted);
+        overflow-x: hidden;
+    }
+
+    /* Hero background */
+    .hero-bg {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        background: url('hero.jpg') center/cover no-repeat;
+        filter: brightness(0.45) contrast(1.1);
+        transform: scale(1.03);
+        transition: transform 10s ease;
+    }
+    .hero-bg::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.45);
+        backdrop-filter: blur(var(--blur));
+    }
+
+    /* Markdown container */
+    #markdownContent {
+        position: relative;
+        z-index: 2;
+        max-width: 850px;
+        margin: 5rem auto;
+        padding: 2rem;
+        background: var(--card);
+        border-radius: var(--radius);
+        backdrop-filter: blur(var(--blur));
+        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        animation: fadeIn 1s ease both;
+    }
+
+    #markdownContent h1, h2, h3, h4, h5, h6 {
+        color: var(--accent);
+        margin: 1rem 0 0.5rem;
+    }
+
+    #markdownContent p { margin: 0.75rem 0; line-height: 1.65; color: var(--muted); }
+
+    #markdownContent a {
+        color: var(--accent);
+        text-decoration: none;
+    }
+    #markdownContent a:hover { opacity: .8; }
+
+    #markdownContent pre {
+        background: rgba(0,0,0,0.5);
+        padding: 1rem;
+        border-radius: 10px;
+        overflow-x: auto;
+        border-left: 4px solid var(--accent);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    }
+
+    #markdownContent code {
+        background: rgba(240,165,0,0.1);
+        color: var(--accent);
+        padding: 2px 6px;
+        border-radius: 5px;
+        font-family: 'Fira Code', monospace;
+    }
+
+    #markdownContent img {
+        display: block;
+        margin: 1rem 0;
+        max-width: 50%;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+        transition: transform 0.3s ease;
+    }
+    #markdownContent img:hover { transform: scale(1.03); }
+
+    /* Simple footer */
+    footer {
+        text-align: center;
+        padding: 2rem 1rem;
+        color: #aaa;
+        font-size: 0.9rem;
+        backdrop-filter: blur(var(--blur));
+        background: rgba(0,0,0,0.3);
+        border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+
+    }
+    #markdownContent blockquote {
+        border-left: 4px solid #f0a500;
+        padding-left: 1rem;
+        color: #ffcc66;
+        font-style: italic;
+        background: rgba(240, 165, 0, 0.05);
+        margin: 1rem 0;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+</head>
+<body>
+
+<div class="hero-bg" aria-hidden="true"></div>
+
+<section id="markdownContent">加载中...</section>
+
+<footer>
+  © 2025 李奇安工作室 | 版权所有.<br>
+  所有图片版权归李奇安工作室所有，未经许可不得使用。
+</footer>
+
+<script>
+async function loadMarkdown(file='https://cdn.jsdelivr.net/gh/Noah-Li2012/LiQiAnStudio1@main/paintings.md'){
+    try{
+        const res = await fetch(file);
+        if(!res.ok) throw new Error('加载失败');
+        const text = await res.text();
+        const html = marked.parse(text, { gfm:true, breaks:true });
+        const container = document.getElementById('markdownContent');
+        container.innerHTML = html;
+
+        container.querySelectorAll('pre code').forEach(block => hljs.highlightBlock(block));
+        container.querySelectorAll('a').forEach(a => a.target='_blank');
+    }catch(err){
+        document.getElementById('markdownContent').innerHTML = "<p>无法加载内容 😢</p>";
+        console.error(err);
+    }
+}
+loadMarkdown();
+</script>
+
+</body>
+</html>
