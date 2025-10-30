@@ -111,6 +111,64 @@
         from { opacity: 0; transform: translateY(15px); }
         to { opacity: 1; transform: translateY(0); }
     }
+    #contactNav{
+      position: sticky;
+      top:0; z-index:1000;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:.8rem 1rem;
+      background: rgba(15,15,16,0.95);
+      backdrop-filter: blur(14px);
+    }
+    #contactNav .logo{
+      font-weight:700;
+      font-size:1.2rem;
+      color: var(--accent);
+      cursor:pointer;
+    }
+    #contactNav .nav-links{
+      display:flex;
+      gap:1rem;
+    }
+    #contactNav .nav-links a{
+      color: #fff;
+      text-decoration:none;
+      font-weight:500;
+      position:relative;
+    }
+    #contactNav .nav-links a::after{
+      content:"";
+      position:absolute;
+      left:0; bottom:-2px;
+      width:100%; height:2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin:right;
+      transition: transform .3s ease;
+    }
+    #contactNav .nav-links a:hover::after{
+      transform: scaleX(1);
+      transform-origin:left;
+    }
+    #contactNav .hamburger{
+      display:none;
+      flex-direction:column; gap:4px;
+      cursor:pointer;
+    }
+    #contactNav .hamburger div{
+      width:25px; height:3px;
+      background:#fff;
+      border-radius:2px;
+    }
+
+    /* Mobile */
+    @media(max-width:768px){
+      #contactNav .nav-links{display:none; flex-direction:column; background: rgba(15,15,16,0.95); position:absolute; top:60px; right:0; width:200px; padding:1rem; border-radius:0 0 0 12px;}
+      #contactNav .nav-links.show{display:flex;}
+      #contactNav .hamburger{display:flex;}
+    }
+
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -121,6 +179,18 @@
 <body>
 
 <div class="hero-bg" aria-hidden="true"></div>
+<nav id="contactNav">
+  <div class="logo">李奇安</div>
+  <div class="nav-links">
+    <a href="/index">首页</a>
+    <a href="/about">简介</a>
+    <a href="/paintings">作品</a>
+    <a href="/contact">联系</a>
+  </div>
+  <div class="hamburger" id="hamburger">
+    <div></div><div></div><div></div>
+  </div>
+</nav>
 
 <section id="markdownContent">加载中...</section>
 
@@ -144,6 +214,13 @@ async function loadMarkdown(file='https://cdn.jsdelivr.net/gh/Noah-Li2012/LiQiAn
     }
 }
 loadMarkdown();
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.querySelector('#contactNav .nav-links');
+    
+    hamburger.addEventListener('click', ()=>{
+      navLinks.classList.toggle('show');
+    });
+
 </script>
 
 </body>
