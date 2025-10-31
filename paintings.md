@@ -1,4 +1,4 @@
-![李奇安 《山NO.01》](https://cdn.jsdelivr.net/gh/Noah-Li2012/LiQiAnStudio@main/images/李奇安+++《山NO.01》150x220cm+++布面油画+++2008年.JPG)
+![李奇安 《山NO.01》](https://cdn.jsdelivr.net/gh/Noah-Li2012/LiQiAnStudio1@main/images/李奇安+++《山NO.01》150x220cm+++布面油画+++2008年.jpg)
 ## 李奇安 《山NO.01》
 - 150x220cm
 - 布面油画
